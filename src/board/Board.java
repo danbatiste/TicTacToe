@@ -10,7 +10,7 @@ public class Board {
         this.WIDTH = WIDTH;
     }
     
-    Symbol nothing = new Symbol(null);
+    Symbol nothing = new Symbol("---");
     Symbol o = new Symbol(" O ");
     Symbol x = new Symbol(" X ");
     
@@ -20,8 +20,30 @@ public class Board {
             {nothing, nothing, nothing}
     };
     
-    public void takeTurn() {
-        
+    public boolean isOccupied(int i, int j) {
+        return !(layout[i][j].value == "---");
+    }
+    
+    public void chooseGrid(int i, int j) {
+       if (!isOccupied(i, j)) {
+           if (xTurn) {
+               layout[i][j] = x;
+           } else {
+               layout[i][j] = o;
+           }
+           this.xTurn = !xTurn;
+       }
+    }
+    
+    public void print() {
+        System.out.println();
+        for (int j=0; j < HEIGHT; j++) {
+            for (int i=0; i < WIDTH; i++) {
+                System.out.print(layout[i][j].value);
+                System.out.print(' ');
+            }
+            System.out.println('\n');
+        }
     }
     
 }

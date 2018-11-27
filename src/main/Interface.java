@@ -10,10 +10,12 @@ import javafx.stage.Stage;
 
 import board.Board;
 
-class LabeledButton extends Button {
+class NumberedButton extends Button {
+    public int number;
     public String label;
-    LabeledButton(String label) {
-        this.label = label;
+    NumberedButton(int number) {
+        this.number = number;
+        this.label = Integer.toString(number);
     }
 }
 
@@ -37,23 +39,17 @@ public class Interface extends Application {
         
         for (int j=0; j < gridHeight; j++) {
             for (int i=0; i < gridWidth; i++) {
-                LabeledButton btn = new LabeledButton(Integer.toString(3*j + i + 1));
+                NumberedButton btn = new NumberedButton(3*j + i + 1);
                 btn.setText(btn.label);
-                
+                int x = i;
+                int y = j;
                 btn.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        System.out.println();
-                        for (board.Symbol[] ss : board.layout) { 
-                            for (board.Symbol s : ss) {
-                                System.out.print(s.value);
-                                System.out.print(' ');
-                            }
-                            System.out.println('\n');
-                        }
+                        board.chooseGrid(x, y);
+                        board.print();
                     }
-                });
-                
+                }); 
                 root.getChildren().add(btn);
             }
         }
