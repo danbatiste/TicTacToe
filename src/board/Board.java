@@ -47,7 +47,11 @@ public class Board {
         List<List<Symbol>> allRows = new ArrayList<List<Symbol>>();
         List<Symbol> tempList = new ArrayList<Symbol>();
         // Gets horizontal rows
-        for (List<Symbol> hRow : layoutAsList()) {
+        for (int j=0; j < HEIGHT; j++) {
+            List<Symbol> hRow = new ArrayList<Symbol>();
+            for (int i=0; i < WIDTH; i++) {
+                hRow.add(layout[i][j]);
+            }
             allRows.add(hRow);
         }
         // Gets vertical rows
@@ -59,18 +63,30 @@ public class Board {
             allRows.add(vRow);
         }
         //Gets diagonal rows
-        //TODO
+        List<Symbol> dRow1 = new ArrayList<Symbol>();
+        int j = 0;
+        for (int i=0; i < WIDTH && j < HEIGHT; i++) {
+            dRow1.add(layout[i][j]);
+            j++;
+        }
+        allRows.add(dRow1);
+        
+        List<Symbol> dRow2 = new ArrayList<Symbol>();
+        j = HEIGHT-1;
+        for (int i=0; i < WIDTH && j >=0; i++) {
+            dRow2.add(layout[i][j]);
+            j--;
+        }
+        allRows.add(dRow2);
         return allRows;
     }
-    
-    
-    //TODO
+
     public boolean hasWinner() {
         if (this.winner != "") {
             System.out.println(this.winner + "is the winner!");
             return true;
         }
-        for (List<Symbol> row : this.layoutAsList()) {
+        for (List<Symbol> row : this.getRows()) {
             if (isAWinningRow(row)) {
                 System.out.println(row.get(0).value + "is the winner!");
                 this.winner = row.get(0).value;
