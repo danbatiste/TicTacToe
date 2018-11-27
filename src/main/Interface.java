@@ -40,8 +40,8 @@ public class Interface extends Application {
     }
     
     @Override
-    public void start(Stage primaryStage ) {
-        primaryStage.setTitle("TicTacToe");
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle(board.getTurn() + "'s turn");
         GridPane root = new GridPane();
         //  Sets column width
         for (int n=0; n < gridWidth; n++) {
@@ -68,7 +68,7 @@ public class Interface extends Application {
                     @Override
                     public void handle(ActionEvent event) {
                         btn.setText(board.chooseGrid(x, y));
-                        board.print();
+                        primaryStage.setTitle(board.print());
                     }
                 }); 
                 root.add(btn, btn.i, btn.j, 1, 1);

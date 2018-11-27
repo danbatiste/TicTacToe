@@ -15,15 +15,23 @@ public class Board {
         this.WIDTH = WIDTH;
     }
     
-    public Symbol nothing = new Symbol("---");
-    public Symbol o = new Symbol(" O ");
-    public Symbol x = new Symbol(" X ");
+    public Symbol nothing = new Symbol("");
+    public Symbol o = new Symbol("O");
+    public Symbol x = new Symbol("X");
     
     public Symbol[][] layout = {
             {nothing, nothing, nothing},
             {nothing, nothing, nothing},
             {nothing, nothing, nothing}
     };
+    
+    public String getTurn() {
+        if (xTurn) {
+            return x.value;
+        } else {
+            return o.value;
+        }
+    }
     
     public List<List<Symbol>> layoutAsList() {
         List<List<Symbol>> layoutListList = new ArrayList<List<Symbol>>();
@@ -36,7 +44,7 @@ public class Board {
     private boolean isAWinningRow(List<Symbol> row) {
         Symbol firstElement = row.get(0);
         for (Symbol s : row) {
-            if ((s.value != firstElement.value) || (s.value == "---")) {
+            if ((s.value != firstElement.value) || (s.value == nothing.value)) {
                 return false;
             }
         }
@@ -82,12 +90,12 @@ public class Board {
 
     public boolean hasWinner() {
         if (this.winner != "") {
-            System.out.println(this.winner + "is the winner!");
+            System.out.println(this.winner + " is the winner!");
             return true;
         }
         for (List<Symbol> row : this.getRows()) {
             if (isAWinningRow(row)) {
-                System.out.println(row.get(0).value + "is the winner!");
+                System.out.println(row.get(0).value + " is the winner!");
                 this.winner = row.get(0).value;
                 return true;
             }
@@ -97,7 +105,7 @@ public class Board {
     
     
     public boolean isOccupied(int i, int j) {
-        return !(layout[i][j].value == "---");
+        return !(layout[i][j].value == nothing.value);
     }
     
     
@@ -117,7 +125,8 @@ public class Board {
        return nothing.value;
     }
     
-    public void print() {
+    // Returns title of the game window
+    public String print() {
         System.out.println();
         for (int j=0; j < HEIGHT; j++) {
             for (int i=0; i < WIDTH; i++) {
@@ -126,7 +135,12 @@ public class Board {
             }
             System.out.println('\n');
         }
-        this.hasWinner();
+        if (this.hasWinner()) {
+            return winner + " wins!";
+        } else {
+            return getTurn() + "'s turn";
+        }
+        
     }
     
 }
