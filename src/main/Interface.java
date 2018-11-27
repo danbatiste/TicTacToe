@@ -5,9 +5,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import board.Board;
 
@@ -39,17 +43,31 @@ public class Interface extends Application {
     public void start(Stage primaryStage ) {
         primaryStage.setTitle("TicTacToe");
         GridPane root = new GridPane();
-        
+        //  Sets column width
+        for (int n=0; n < gridWidth; n++) {
+            ColumnConstraints column = new ColumnConstraints();
+            column.setPercentWidth(100/gridHeight);
+            root.getColumnConstraints().add(column);
+        }   
+        //  Sets row height
+        for (int n=0; n < gridHeight; n++) {
+            RowConstraints row = new RowConstraints();
+            row.setPercentHeight(100/gridHeight);
+            root.getRowConstraints().add(row);
+        } 
+        List<NumberedButton> Buttons = new ArrayList<NumberedButton>();
         for (int j=0; j < gridHeight; j++) {
             for (int i=0; i < gridWidth; i++) {
                 NumberedButton btn = new NumberedButton(i, j);
-                btn.setText(btn.label);
+                btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+                Buttons.add(btn);
+                btn.setText(board.nothing.value);
                 int x = i;
                 int y = j;
                 btn.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        board.chooseGrid(x, y);
+                        btn.setText(board.chooseGrid(x, y));
                         board.print();
                     }
                 }); 

@@ -15,9 +15,9 @@ public class Board {
         this.WIDTH = WIDTH;
     }
     
-    Symbol nothing = new Symbol("---");
-    Symbol o = new Symbol(" O ");
-    Symbol x = new Symbol(" X ");
+    public Symbol nothing = new Symbol("---");
+    public Symbol o = new Symbol(" O ");
+    public Symbol x = new Symbol(" X ");
     
     public Symbol[][] layout = {
             {nothing, nothing, nothing},
@@ -45,7 +45,6 @@ public class Board {
     
     private List<List<Symbol>> getRows() {
         List<List<Symbol>> allRows = new ArrayList<List<Symbol>>();
-        List<Symbol> tempList = new ArrayList<Symbol>();
         // Gets horizontal rows
         for (int j=0; j < HEIGHT; j++) {
             List<Symbol> hRow = new ArrayList<Symbol>();
@@ -102,15 +101,20 @@ public class Board {
     }
     
     
-    public void chooseGrid(int i, int j) {
+    public String chooseGrid(int i, int j) {
+       String toReturn;
        if (!isOccupied(i, j)) {
            if (xTurn) {
                layout[i][j] = x;
+               toReturn = x.value;
            } else {
                layout[i][j] = o;
+               toReturn = o.value;
            }
            this.xTurn = !xTurn;
+           return toReturn;
        }
+       return nothing.value;
     }
     
     public void print() {
