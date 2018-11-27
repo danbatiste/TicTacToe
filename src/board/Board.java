@@ -8,6 +8,7 @@ public class Board {
     public int HEIGHT = 3;
     public int WIDTH = 3;
     public boolean xTurn = true;
+    public String winner = "";
     
     public Board(int HEIGHT, int WIDTH) {
         this.HEIGHT = HEIGHT;
@@ -32,8 +33,14 @@ public class Board {
         return layoutListList;
     }
     
-    private boolean isWinningRow() {
-        
+    private boolean isAWinningRow(List<Symbol> row) {
+        Symbol firstElement = row.get(0);
+        for (Symbol s : row) {
+            if ((s.value != firstElement.value) || (s.value == "---")) {
+                return false;
+            }
+        }
+        return true;
     }
     
     private List<List<Symbol>> getRows() {
@@ -58,14 +65,26 @@ public class Board {
     
     
     //TODO
-    public Symbol hasWinner() {
-        for 
+    public boolean hasWinner() {
+        if (this.winner != "") {
+            System.out.println(this.winner + "is the winner!");
+            return true;
+        }
+        for (List<Symbol> row : this.layoutAsList()) {
+            if (isAWinningRow(row)) {
+                System.out.println(row.get(0).value + "is the winner!");
+                this.winner = row.get(0).value;
+                return true;
+            }
+        }
+        return false;
     }
     
     
     public boolean isOccupied(int i, int j) {
         return !(layout[i][j].value == "---");
     }
+    
     
     public void chooseGrid(int i, int j) {
        if (!isOccupied(i, j)) {
@@ -87,6 +106,7 @@ public class Board {
             }
             System.out.println('\n');
         }
+        this.hasWinner();
     }
     
 }
