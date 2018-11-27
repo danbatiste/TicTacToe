@@ -6,16 +6,19 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import board.Board;
 
 class NumberedButton extends Button {
-    public int number;
+    public int i;
+    public int j;
     public String label;
-    NumberedButton(int number) {
-        this.number = number;
-        this.label = Integer.toString(number);
+    NumberedButton(int i, int j) {
+        this.i = i;
+        this.j = j;
+        this.label = Integer.toString(3*j + i + 1);
     }
 }
 
@@ -35,11 +38,11 @@ public class Interface extends Application {
     @Override
     public void start(Stage primaryStage ) {
         primaryStage.setTitle("TicTacToe");
-        StackPane root = new StackPane();
+        GridPane root = new GridPane();
         
         for (int j=0; j < gridHeight; j++) {
             for (int i=0; i < gridWidth; i++) {
-                NumberedButton btn = new NumberedButton(3*j + i + 1);
+                NumberedButton btn = new NumberedButton(i, j);
                 btn.setText(btn.label);
                 int x = i;
                 int y = j;
@@ -50,7 +53,7 @@ public class Interface extends Application {
                         board.print();
                     }
                 }); 
-                root.getChildren().add(btn);
+                root.add(btn, btn.i, btn.j, 1, 1);
             }
         }
         primaryStage.setScene(new Scene(root, sceneWidth, sceneHeight));

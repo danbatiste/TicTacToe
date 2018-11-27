@@ -1,5 +1,9 @@
 package board;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Board {
     public int HEIGHT = 3;
     public int WIDTH = 3;
@@ -19,6 +23,45 @@ public class Board {
             {nothing, nothing, nothing},
             {nothing, nothing, nothing}
     };
+    
+    public List<List<Symbol>> layoutAsList() {
+        List<List<Symbol>> layoutListList = new ArrayList<List<Symbol>>();
+        for (Symbol[] row : layout) {
+            layoutListList.add(Arrays.asList(row));
+        }
+        return layoutListList;
+    }
+    
+    private boolean isWinningRow() {
+        
+    }
+    
+    private List<List<Symbol>> getRows() {
+        List<List<Symbol>> allRows = new ArrayList<List<Symbol>>();
+        List<Symbol> tempList = new ArrayList<Symbol>();
+        // Gets horizontal rows
+        for (List<Symbol> hRow : layoutAsList()) {
+            allRows.add(hRow);
+        }
+        // Gets vertical rows
+        for (int i=0; i < WIDTH; i++) {
+            List<Symbol> vRow = new ArrayList<Symbol>();
+            for (int j=0; j < HEIGHT; j++) {
+                vRow.add(layout[i][j]);
+            }
+            allRows.add(vRow);
+        }
+        //Gets diagonal rows
+        //TODO
+        return allRows;
+    }
+    
+    
+    //TODO
+    public Symbol hasWinner() {
+        for 
+    }
+    
     
     public boolean isOccupied(int i, int j) {
         return !(layout[i][j].value == "---");
